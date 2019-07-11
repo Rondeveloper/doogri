@@ -24,16 +24,12 @@ class MainPage extends React.Component {
         const subHeaderText = 'אחרי שרכבנו על הגרסה הרגילה, מגיעה זו המשפרת את תחום השטח ומוסיפה אבזור. האם יש לדגם ה-X את מה שצריך בשביל לתת פייט לגדולים ממנו?';
         const imageUri = 'http://www.doogri.co.il/wp-content/uploads/2019/05/IMG_3018-700x465.jpg';
         return (
-            <View style={[styles.container, styles.align]}>
-                <View style={{height: scale(100)}}>
-                    <Image style={{flex:1}} source={require('../images/motorcycle.jpg')} />
+            <View style={{flex: 1}}>
+                <View style={{height: 200, backgroundColor:'purple', width:'100%', overflow:'hidden' }}>
+                    <Image style={{ width:'100%', height:'100%', resizeMode:'cover'}} source={require('../images/motorcycle_full.jpg')} />
                 </View>
-                <View style={[styles.mainArticle]}>
-                
-                    <View style={{backgroundColor: '#2c2c2b', bottom: scale(20)}}>
-                        <Text style={styles.mainArticleTitle}>{headerText}</Text>
-                        <Text style={styles.mainArticleSubtitle}>{subHeaderText}</Text>
-                    </View>
+                <View>
+                    <Text>עד מתי</Text>
                 </View>
 
 
@@ -53,7 +49,7 @@ class MainPage extends React.Component {
 
 const styles = EStyleSheet.create({
     container: {
-        flex: 1,
+        //flex: 1,
         //backgroundColor: 'green'
     },
     mainArticle: {
@@ -74,10 +70,12 @@ const styles = EStyleSheet.create({
         justifyContent: 'center'
     },
     mainArticleTitle: {
-        color: '#fff'
+        color: '#fff',
+        fontSize: scale(20)
     },
     mainArticleSubtitle: {
-        color: '#fff'
+        color: '#fff',
+        //height :scale(200)
     }
 });
 
