@@ -11,10 +11,16 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
+#import <React/RCTI18nUtil.h> //<== AmerllicA config
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+
+  [[RCTI18nUtil sharedInstance] allowRTL:YES];
+  //[[RCTI18nUtil sharedInstance] forceRTL:YES];
+
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"doogri"
