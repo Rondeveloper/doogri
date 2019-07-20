@@ -10,18 +10,32 @@ import Constants from '../constants';
 import { withNavigation } from 'react-navigation'
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 
+import InnerArticle from './InnerArticle';
+import { loadArticle } from '../actions';
+
 const { SCREEN_WIDTH, SCREEN_HEIGHT } = Dimensions.get('window');
 
 class MainArticle extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            article: {
+                imageUri: Constants.trk502x,
+                title: Constants.title,
+                subtitle: Constants.subtitle
+            }
+        }
+
     }
 
     openArticle = () => {
-        const { article } = this.props;
+       /* const { article } = this.props;
         this.props.navigation.navigate("ArticlePage", {
             article
-        });
+        });*/
+        this.props.loadArticle(this.state.article);
+        this.props.navigation.navigate("ArticlePage")
+        //console.log(this.props) 
     }
 
     render() {
@@ -29,64 +43,38 @@ class MainArticle extends React.Component {
             <View>
                 {Platform.OS == 'android' ?
                     <TouchableNativeFeedback useForeground
+                    //style={{backgroundColor: 'purple'}}
                         //background={TouchableNativeFeedback.Ripple('#fff', false)}
                         onPress={this.openArticle}
                     >
-                        <InnerArticle {...this.props} />
+                        <InnerArticle {...this.props} article={this.state.article} />
                     </TouchableNativeFeedback>
-                    :
+                    : Platform.OS == 'ios' ?
                     <TouchableOpacity activeOpacity={0.6}
                     onPress={this.openArticle} >
-                        <InnerArticle {...this.props} />
+                        <InnerArticle {...this.props} article={this.state.article} />
                     </TouchableOpacity>
+                    : null
                 }
             </View>
         )
     }
 }
 
-class InnerArticle extends React.Component {
-    
-    constructor(props){
-        super(props);
-        this.state = {
-        }
+function mapDispatchToProps(dispatch) {
+    return {
+       loadArticle: article => dispatch(loadArticle(article))
     }
-
-    render() {
-        const { imagePath, titleText, subTitleText } = this.props.article;
-        return (
-            <View style={{ paddingBottom: scale(10) }}>
-                <View style={[styles.imageContainer]}>
-                    <Image style={{ width: '100%', flex: 1 }}
-                     source={imagePath} />
-                </View>
-                
-                <View style={styles.titlesContainer}>
-                    <Text style={styles.title}>{titleText}</Text>
-                    <Text numberOfLines={3} style={[styles.subtitle,
-                         { lineHeight: scale(16) }]}>
-                        {subTitleText}
-                    </Text>
-                </View>
-            </View>
-
-        )
-    }
-    
 }
-
 function mapStateToProps(state) {
     return {
-        article: {
-            imagePath: state.article.imagePath,
-            titleText: state.article.titleText,
-            subTitleText: state.article.subTitleText
-        }
+       article: {
+           imageUri: state.article.imageUri
+       }
     }
 }
 
-export default connect(mapStateToProps, {})(withNavigation(MainArticle))
+export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(MainArticle))
 
 const styles = EStyleSheet.create({
     imageContainer: {

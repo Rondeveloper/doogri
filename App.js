@@ -16,11 +16,12 @@ import StackViewStyleInterpolator from 'react-navigation-stack/lib/module/views/
 import MainPage from './src/screens/MainPage';
 import ArticlePage from './src/screens/ArticlePage';
 import HeaderMenu from './src/components/HeaderMenu';
+import TestMain from './src/screens/TestMain';
 
 let { height, width } = Dimensions.get('window');
 EStyleSheet.build({ $rem: width / 380 });
 
-I18nManager.forceRTL(true);
+I18nManager.forceRTL(true); // true for rtl false for ltr, need to refresh app twice after change
 
 class App extends React.Component {
 

@@ -9,7 +9,6 @@ export default class HeaderMenu extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeButton: false
         }
     }
 
@@ -18,11 +17,10 @@ export default class HeaderMenu extends React.Component {
     }
 
     render() {
-        console.log('active: ' + this.state.activeButton)
         return (
             <View style={styles.btn}>
                 <TouchableNativeFeedback 
-                    style={{width: scale(50), height: scale(50),
+                    style={{width: scale(40), height: scale(40),
                     alignItems:'center', justifyContent: 'center'}}
                     background={TouchableNativeFeedback.Ripple('#2b2b2b', true)}
                     //onPressIn={this.onPressIn}
@@ -41,7 +39,7 @@ const styles = EStyleSheet.create({
         backgroundColor: '#fff',
         marginRight: scale(5),
         width: scale(55),
-        height: scale(55),
+        height: scale(50),
         borderRadius: 30,
         alignItems: 'center',
         justifyContent: 'center',

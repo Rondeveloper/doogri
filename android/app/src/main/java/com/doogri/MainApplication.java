@@ -47,7 +47,7 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
         I18nUtil sharedI18nUtilInstance = I18nUtil.getInstance(); //<== AmerllicA config
-        //sharedI18nUtilInstance.forceRTL(this, true); //<== AmerllicA config
+        sharedI18nUtilInstance.forceRTL(this, true); //<== AmerllicA config
         sharedI18nUtilInstance.allowRTL(this, true); //<== AmerllicA config
 
     SoLoader.init(this, /* native exopackage */ false);

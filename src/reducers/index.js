@@ -4,9 +4,9 @@ import Constants from '../constants'
 const initialState = {
     number: 431,
     article: {
-        imagePath: require('../images/motorcycle_full.jpg'),
-        titleText: Constants.titleText,
-        subTitleText: Constants.subTitleText,
+        imageUri: Constants.trk502x,
+        title: Constants.title,
+        subtitle: Constants.subtitle,
     }
 };
 
@@ -17,10 +17,9 @@ export default function rootReducer (state = initialState, action) {
                 number: state.number + 1
             })
         case LOAD_ARTICLE :
-            return Object.assign({}, state.article, {
-                imagePath: action.payload.article.imagePath,
-                titleText: action.payload.article.titleText,
-                subTitleText: action.payload.article.subTitleText,
+            //console.log(action.payload.imageUri) 
+            return Object.assign({}, state, {
+                article: action.payload
             })
         default:
             return state;

@@ -5,8 +5,9 @@ import { View, ScrollView, Image, Dimensions,
 import { connect } from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { scale } from 'react-native-size-matters';
+
+
 import { increaseNumber } from '../actions';
-//import Constants from '../constants';
 import WideCard from '../components/WideCard';
 //import { TouchableNativeFeedback} from 'react-native-gesture-handler';
 import MainArticle from '../components/MainArticle'
@@ -17,7 +18,9 @@ class MainPage extends React.Component {
 
     constructor(props) {
         super(props);
-        //this.state = {  }
+        this.state = { 
+            
+         }
     }
 
     onPressIncrease = () => {
@@ -72,9 +75,9 @@ class MainPage extends React.Component {
             <Image style={{ width: '100%', height: '100%' }} source={ require('../images/motorcycle_full.jpg') }/>
         </View>
         <View style={styles.titlesContainer}>
-            <Text style={styles.title}>{Constants.titleText}</Text>
+            <Text style={styles.title}>{Constants.title}</Text>
             <Text numberOfLines={3} style={[styles.subtitle, {lineHeight: scale(16)}]}>
-                {Constants.subTitleText}
+                {Constants.subtitle}
             </Text>
         </View>
     </View>

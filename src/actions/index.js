@@ -7,3 +7,4 @@ export function increaseNumber() {
 export function loadArticle(payload) {
     return { type: LOAD_ARTICLE, payload }
 }
+
