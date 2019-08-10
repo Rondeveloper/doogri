@@ -110,21 +110,19 @@ const AppDrawerNavigator = createDrawerNavigator({
 
   })
 
-const CoolComponent = props => (
-  <View {...props} style={{ paddingTop: scale(8) }}>
-    <TouchableNativeFeedback style={{
-      width: '100%', height: scale(40),
-      backgroundColor: '#ccd3de', justifyContent: 'center'
-    }}
-      onPress={() => props.navigation.closeDrawer()}>
-      <Text style={{ color: '#3072d9', paddingRight: scale(10) }}>לחץ אחי</Text>
-    </TouchableNativeFeedback>
-  </View>
-)
-
 const CustomDrawerContentComponent = props => (
   <ScrollView>
     <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+
+    <View style={{ width: scale(300), height: scale(70), marginBottom: scale(10),
+       borderBottomColor: 'rgba(0,0,0,0.1)', borderBottomWidth: 0.9,
+        justifyContent: 'center'
+         }} >
+         <View style={{ width: '50%', height: '50%', marginStart: scale(10) }} >
+          <Image style={{ flex: 1, width: null, height: null, resizeMode: 'contain'  }} 
+          source={{ uri: 'https://www.doogri.co.il/wp-content/themes/websol-doogri/assets/images/logo-doogri-moto2.png' }} />
+         </View>
+      </View>
 
       <DrawerItems {...props} />
 

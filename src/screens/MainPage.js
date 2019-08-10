@@ -1,7 +1,9 @@
 
 import React from 'react';
-import { View, ScrollView, Image, Dimensions, 
-     StatusBar, } from 'react-native';
+import {
+    View, ScrollView, Image, Dimensions,
+    StatusBar, SectionList, Text
+} from 'react-native';
 import { connect } from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { scale } from 'react-native-size-matters';
@@ -14,121 +16,131 @@ import MainArticle from '../components/MainArticle'
 
 const { SCREEN_WIDTH, SCREEN_HEIGHT } = Dimensions.get('window');
 
+const ViewTypes = {
+    MAIN_ARTICLE: 0,
+    WIDE_CARD: 1,
+    SMALL_CARD: 2
+};
+
+
 class MainPage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { 
-            
-         }
+        this.state = {
+            sections: []
+        }
     }
 
-    onPressIncrease = () => {
-        this.props.increaseNumber()
-    }
+    componentDidMount() {
+        const newsData = [
+            { type: ViewTypes.WIDE_CARD },
+            { type: ViewTypes.WIDE_CARD },
+            { type: ViewTypes.WIDE_CARD },
+            { type: ViewTypes.SMALL_CARD },
+        ]
 
-    openArticle = () => {
-        this.props.navigation.navigate("ArticlePage", {
+        const motorcycleTests = [
+            { type: ViewTypes.WIDE_CARD },
+            { type: ViewTypes.WIDE_CARD },
+            { type: ViewTypes.WIDE_CARD },
+            { type: ViewTypes.WIDE_CARD },
+            { type: ViewTypes.SMALL_CARD },
+            { type: ViewTypes.SMALL_CARD },
+        ]
 
+        const carTests = [
+            { type: ViewTypes.WIDE_CARD },
+            { type: ViewTypes.WIDE_CARD },
+            { type: ViewTypes.WIDE_CARD },
+            { type: ViewTypes.WIDE_CARD },
+            { type: ViewTypes.SMALL_CARD },
+            { type: ViewTypes.SMALL_CARD },
+        ]
+
+        this.setState({
+            sections: [
+                { title: 'חדשות', data: newsData },
+                { title: 'מבחני אופנועים', data: motorcycleTests },
+                { title: 'מבחני רכב', data: carTests }
+            ]
         })
     }
 
-    render() {
-        
+    renderItem = ({ item: { type }, index, section }) => {
         return (
-                <ScrollView style={{ flex: 1, }}
-                    contentContainerStyle={{ paddingBottom: scale(30) }}>
-                    
-                    <StatusBar backgroundColor={'#fff'} 
+            <View style={{ paddingTop: index == 0 ? scale(8) : 0 }} >
+                {type == ViewTypes.MAIN_ARTICLE ? <MainArticle />
+                    : type == ViewTypes.WIDE_CARD ? <WideCard />
+                        : type == ViewTypes.SMALL_CARD ? <SmallCard />
+                            : null}
+            </View>
+        )
+
+    }
+
+    renderSectionHeader = ({ section: { title } }) => {
+        return (
+            <View style={styles.viewSectionHeader} >
+                <Text style={styles.textSectionHeader} >{title}</Text>
+            </View>
+        )
+    }
+
+    renderListHeader = () => (
+        <View>
+            <MainArticle />
+            <WideCard />
+            <WideCard />
+            <WideCard />
+        </View>
+    )
+
+    keyExtractor = (item, index) => index + ''
+
+    render() {
+
+        return (
+            <View>
+                <StatusBar backgroundColor={'#fff'}
                     barStyle="dark-content" animated={true} showHideTransition={'slide'} />
-                    
-                    <MainArticle />
-
-                    <WideCard />
-                    <WideCard />
-                    <WideCard />
-
-                    <View style={{height: scale(110), width: '100%',
-                     justifyContent:'space-around', flexDirection: 'row',
-                     paddingBottom: scale(10) }}>
-                        <Image style={{height: '100%', width: '31%', borderRadius: 6 }} source={require('../images/honda-x-adv.jpg')} ></Image>
-                        <Image style={{height: '100%', width: '31%', borderRadius: 6 }} source={require('../images/cadillac.jpg')} ></Image>
-                        <Image style={{height: '100%', width: '31%', borderRadius: 6 }} source={require('../images/honda-x-adv.jpg')} ></Image>
-                    </View>
-
-                    <View style={{height: scale(110), width: '100%',
-                     justifyContent:'space-around', flexDirection: 'row',
-                     paddingBottom: scale(10) }}>
-                        <Image style={{height: '100%', width: '31%', borderRadius: 6 }} source={require('../images/cadillac.jpg')} ></Image>
-                        <Image style={{height: '100%', width: '31%', borderRadius: 6 }} source={require('../images/honda-x-adv.jpg')} ></Image>
-                        <Image style={{height: '100%', width: '31%', borderRadius: 6 }} source={require('../images/cadillac.jpg')} ></Image>
-                    </View>
-
-                </ScrollView>
+                <SectionList
+                    sections={this.state.sections}
+                    renderItem={this.renderItem}
+                    renderSectionHeader={this.renderSectionHeader}
+                    ListHeaderComponent={this.renderListHeader}
+                    keyExtractor={this.keyExtractor}
+                    stickySectionHeadersEnabled
+                />
+            </View>
         );
     }
 }
 
-/*MainArticle = () => (
-    <View style={{ paddingBottom: scale(10) }}>
-        <View style={[styles.imageContainer]}>
-            <Image style={{ width: '100%', height: '100%' }} source={ require('../images/motorcycle_full.jpg') }/>
-        </View>
-        <View style={styles.titlesContainer}>
-            <Text style={styles.title}>{Constants.title}</Text>
-            <Text numberOfLines={3} style={[styles.subtitle, {lineHeight: scale(16)}]}>
-                {Constants.subtitle}
-            </Text>
-        </View>
+const SmallCard = () => (
+    <View style={{
+        height: scale(110), width: '100%',
+        justifyContent: 'space-around', flexDirection: 'row',
+        paddingBottom: scale(10)
+    }}>
+        <Image style={{ height: '100%', width: '31%', borderRadius: 6 }} source={require('../images/cadillac.jpg')} ></Image>
+        <Image style={{ height: '100%', width: '31%', borderRadius: 6 }} source={require('../images/honda-x-adv.jpg')} ></Image>
+        <Image style={{ height: '100%', width: '31%', borderRadius: 6 }} source={require('../images/cadillac.jpg')} ></Image>
     </View>
-)*/
+)
 
 const styles = EStyleSheet.create({
-    container: {
-        flex: 1
-    },
-    button: {
-        borderWidth: 1,
-        padding: 25,
-        borderColor: 'black'
-    },
-    imageContainer: {
-        height: scale(210),
-        width: '100%'
-    },
-    text: {
-        color: '#fff',
-        fontSize: scale(15)
-    },
-    titlesContainer: {
-        //height: scale(200),
-        width: SCREEN_WIDTH,
-        padding: scale(7),
-        paddingStart: scale(12),
-        backgroundColor: '#f7ea08'
-    },
-    title: {
-        color: '#000',
-        fontSize: scale(16),
-        fontWeight: 'bold'
-    },
-    subtitle: {
-        color: '#000',
-        fontSize: scale(12),
-    },
-    mainArticleDate: {
-        color: '#000',
-    },
-    center: {
-        alignItems: 'center',
+    viewSectionHeader: {
+        height: scale(40),
+        width: '100%',
+        backgroundColor: '#10159e',
         justifyContent: 'center'
     },
-    alignCenter: {
-        alignItems: 'center'
-    },
-    justifyCenter: {
-        justifyContent: 'center'
-    },
+    textSectionHeader: {
+        paddingRight: scale(7),
+        fontSize: scale(15),
+        color: '#fff'
+    }
 });
 
 function mapStateToProps(state) {
