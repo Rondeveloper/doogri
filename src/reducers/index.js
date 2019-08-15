@@ -7,6 +7,7 @@ const initialState = {
         imageUri: Constants.trk502x,
         title: Constants.title,
         subtitle: Constants.subtitle,
+        longSubtitle: Constants.longSubtitle
     }
 };
 

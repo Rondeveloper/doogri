@@ -14,7 +14,8 @@ class WideCard extends React.Component {
             article: {
                 imageUri: Constants.golfgti,
                 title: Constants.carTitle1,
-                subtitle: Constants.carSubtitle1
+                subtitle: Constants.carSubtitle1,
+                longSubtitle: Constants.longCarSubtitle1
             }
         }
     }

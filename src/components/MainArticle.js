@@ -13,7 +13,7 @@ import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 import InnerArticle from './InnerArticle';
 import { loadArticle } from '../actions';
 
-const { SCREEN_WIDTH, SCREEN_HEIGHT } = Dimensions.get('window');
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 class MainArticle extends React.Component {
     constructor(props) {
@@ -22,7 +22,8 @@ class MainArticle extends React.Component {
             article: {
                 imageUri: Constants.trk502x,
                 title: Constants.title,
-                subtitle: Constants.subtitle
+                subtitle: Constants.subtitle,
+                longSubtitle: Constants.longSubtitle
             }
         }
 
@@ -43,7 +44,6 @@ class MainArticle extends React.Component {
             <View>
                 {Platform.OS == 'android' ?
                     <TouchableNativeFeedback useForeground
-                    //style={{backgroundColor: 'purple'}}
                         //background={TouchableNativeFeedback.Ripple('#fff', false)}
                         onPress={this.openArticle}
                     >

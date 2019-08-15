@@ -1,11 +1,11 @@
 
 import React, { Component } from 'react';
 import {
-  Dimensions, Image, I18nManager, View,
+  Dimensions, Image, I18nManager, View, 
   Text, ScrollView, Button, TouchableOpacity, Animated, Easing
 } from 'react-native';
 import {
-  createAppContainer, createStackNavigator, createDrawerNavigator,
+  createAppContainer, createStackNavigator, createDrawerNavigator, createMaterialTopTabNavigator,
   SafeAreaView, DrawerItems, DrawerActions
 } from 'react-navigation';
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -13,15 +13,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { scale } from 'react-native-size-matters';
 import { TouchableNativeFeedback, TouchableHighlight } from 'react-native-gesture-handler';
 import StackViewStyleInterpolator from 'react-navigation-stack/lib/module/views/StackView/StackViewStyleInterpolator.js';
-import MainPage from './src/screens/MainPage';
-import ArticlePage from './src/screens/ArticlePage';
 import HeaderMenu from './src/components/HeaderMenu';
-import TestMain from './src/screens/TestMain';
+import {MainPage, ArticlePage, NewsPage} from './src/screens';
 
 let { height, width } = Dimensions.get('window');
 EStyleSheet.build({ $rem: width / 380 });
 
 I18nManager.forceRTL(true); // true for rtl false for ltr, need to refresh app twice after change
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 class App extends React.Component {
 
@@ -36,18 +36,6 @@ class App extends React.Component {
   }
 }
 
-class SecondPage extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>זה סתם עמוד אחי גזגז</Text>
-        <Button title="אבטיח" style={{ width: scale(50), height: scale(50) }}
-          onPress={() => this.props.navigation.navigate("MainPage")} />
-      </View>
-    );
-  }
-}
-
 
 const MainStackNavigator = createStackNavigator({
   MainPage: {
@@ -56,7 +44,6 @@ const MainStackNavigator = createStackNavigator({
       const imageUri = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXn4GLwVDAS1PMmZG6nGTykQ_f499BjO1JHNoLZ7AcYSlcHqRG';
 
       return {
-        
         headerRight: (
           <HeaderMenu navigation={navigation} />
         ),
@@ -69,7 +56,7 @@ const MainStackNavigator = createStackNavigator({
   ArticlePage: {
     screen: ArticlePage,
 
-  }
+  },
 
   //Dashboard: DashboardScreen
 }, {
@@ -77,16 +64,30 @@ const MainStackNavigator = createStackNavigator({
 
     },
     transitionConfig: () => ({
-      screenInterpolator: StackViewStyleInterpolator.forHorizontal, 
+      screenInterpolator: StackViewStyleInterpolator.forHorizontal,
       transitionSpec: {
         useNativeDriver: true,
         duration: 300,
         timing: Animated.timing,
-        easing: Easing.inOut(Easing.ease)
+        easing: Easing.inOut(Easing.ease),
+
       },
+
     })
   })
 
+  const TopTabNavigator = createMaterialTopTabNavigator({
+    News: { screen: NewsPage, navigationOptions: ({props}) => { return { tabBarLabel: 'חדשות' } } },
+    RoadTests: { screen: NewsPage, navigationOptions: ({props}) => { return { tabBarLabel: 'מבחני דרכים' } } },
+    Magazine: { screen: NewsPage, navigationOptions: ({props}) => { return { tabBarLabel: 'מגזין' } } },
+    Motorsport: { screen: NewsPage, navigationOptions: ({props}) => { return { tabBarLabel: 'ספורט מוטורי' } } },
+    Vehicle: { screen: NewsPage, navigationOptions: ({props}) => { return { tabBarLabel: 'רכב' } } },
+  },{
+    tabBarOptions: {
+      style: {backgroundColor: '#2c2c2c', width: SCREEN_WIDTH*2},
+      indicatorStyle: {width: SCREEN_WIDTH * 2 / 5}
+    }
+  })
 
 const AppDrawerNavigator = createDrawerNavigator({
   MainPage: {
@@ -95,42 +96,51 @@ const AppDrawerNavigator = createDrawerNavigator({
       return { drawerLabel: "עמוד הבית", }
     }
   },
-  SecondPage: {
-    screen: ArticlePage,
+  News: {
+    screen: TopTabNavigator,
     navigationOptions: ({ navigation }) => {
-      return { drawerLabel: "סתם עמוד", }
+      return { drawerLabel: "חדשות", }
     },
   },
+  RoadTests: {
+    screen: TopTabNavigator,
+    navigationOptions: ({ navigation }) => {
+      return { drawerLabel: "מבחני דרכים", }
+    },
+  }
 }, {
-    edgeWidth: 100,
+    edgeWidth: scale(20),
     contentComponent: (props) =>
       <CustomDrawerContentComponent {...props} />,
-    
+
 
 
   })
 
-const CoolComponent = props => (
-  <View {...props} style={{ paddingTop: scale(8) }}>
-    <TouchableNativeFeedback style={{
-      width: '100%', height: scale(40),
-      backgroundColor: '#ccd3de', justifyContent: 'center'
-    }}
-      onPress={() => props.navigation.closeDrawer()}>
-      <Text style={{ color: '#3072d9', paddingRight: scale(10) }}>לחץ אחי</Text>
-    </TouchableNativeFeedback>
-  </View>
-)
 
 const CustomDrawerContentComponent = props => (
   <ScrollView>
     <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
 
+      <MagazineLogo />
       <DrawerItems {...props} />
 
     </SafeAreaView>
   </ScrollView>
 );
+
+const MagazineLogo = () => (
+  <View style={{
+    width: scale(300), height: scale(70), marginBottom: scale(10),
+    borderBottomColor: 'rgba(0,0,0,0.1)', borderBottomWidth: 0.9,
+    justifyContent: 'center'
+  }} >
+    <View style={{ width: '50%', height: '50%', marginStart: scale(10) }} >
+      <Image style={{ flex: 1, width: null, height: null, resizeMode: 'contain' }}
+        source={{ uri: 'https://www.doogri.co.il/wp-content/themes/websol-doogri/assets/images/logo-doogri-moto2.png' }} />
+    </View>
+  </View>
+)
 
 const AppNavigationContainer = createAppContainer(AppDrawerNavigator);
 

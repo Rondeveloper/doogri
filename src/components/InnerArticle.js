@@ -57,7 +57,7 @@ const styles = EStyleSheet.create({
         fontSize: scale(15)
     },
     titlesContainer: {
-        //height: scale(200),
+        height: scale(85), // need to set height so if the subtitle is too short, the whole titlesContainer wont resize itself.
         width: SCREEN_WIDTH,
         padding: scale(7),
         paddingStart: scale(12),
