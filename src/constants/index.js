@@ -21,7 +21,7 @@ I18nManager.isRTL ?
             carSubtitle1: 'The Golf GTI’s 242bhp figure might sound a little bit conservative in 2019, especially as rivals punch significantly harder, with lower price tags. So does the Golf GTI feel in any way slow?',
         
         };
-        obj['trk502x'] = 'https://img.drivemag.net/media/default/0001/88/TRK502X-003-6439-default-large.jpeg'
-        obj['golfgti'] = 'https://uploads.volkswagen-newsroom.com/system/production/media/24356/images/543ea39f58a6df5415baa2ac649af950bb93188b/DB2018AU00339_full.jpg?1531592138'
+        obj['trk502x'] = 'https://www.doogri.co.il/wp-content/uploads/2019/05/IMG_3018.jpg'
+        obj['golfgti'] = 'https://www.doogri.co.il/wp-content/uploads/2019/06/IMG_3182_B.jpg'
 
 export default obj;

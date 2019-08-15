@@ -28,19 +28,19 @@ class WideCard extends React.Component {
     render() {
         const { article } = this.state;
         return (
-            <TouchableOpacity activeOpacity={0.7} onPress={this.openArticle} >
+            <TouchableOpacity activeOpacity={0.7} onPress={this.openArticle} style={{marginBottom: scale(8)}}>
                 <View style={styles.container}>
-                <Image style={styles.image}
-                source={ { uri: article.imageUri } }
-                />
-                <View style={styles.textContainer}>
-                    <Text style={[styles.text, {fontWeight: 'bold'}]}>
-                        {article.title}
-                    </Text>
-                    <Text numberOfLines={2} style={[styles.text, { fontSize: scale(11), lineHeight: scale(17) }]}>
-                        {article.subtitle}
-                    </Text>
-                </View>
+                    <Image style={styles.image}
+                    source={ { uri: article.imageUri } }
+                    />
+                    <View style={styles.textContainer}>
+                        <Text style={[styles.text, {fontWeight: 'bold'}]}>
+                            {article.title}
+                        </Text>
+                        <Text numberOfLines={2} style={[styles.text, { fontSize: scale(11), lineHeight: scale(17) }]}>
+                            {article.subtitle}
+                        </Text>
+                    </View>
                 </View>
             </TouchableOpacity>
         );
@@ -60,7 +60,7 @@ const styles = EStyleSheet.create({
         width: '100%',
         height: scale(80),
         flexDirection: 'row',
-        paddingBottom: scale(8)
+        //marginBottom: scale(8)
     },
     image: {
         width: '34%',

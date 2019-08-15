@@ -42,6 +42,7 @@ class MainArticle extends React.Component {
     render() {
         return (
             <View>
+                
                 {Platform.OS == 'android' ?
                     <TouchableNativeFeedback useForeground
                         //background={TouchableNativeFeedback.Ripple('#fff', false)}
