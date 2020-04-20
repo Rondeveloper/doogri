@@ -1,14 +1,14 @@
 import React from 'react';
 import {
     View, Text, Image, TouchableOpacity, Dimensions,
-    Platform
+    Platform, Animated, TouchableNativeFeedback
 } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { scale } from 'react-native-size-matters';
 import { connect } from 'react-redux';
 import Constants from '../constants';
 import { withNavigation } from 'react-navigation'
-import {TouchableNativeFeedback} from 'react-native-gesture-handler';
+import { TouchableNativeFeedback as GHTouchableNativeFeedback } from 'react-native-gesture-handler';
 
 import InnerArticle from './InnerArticle';
 import { loadArticle } from '../actions';
@@ -30,48 +30,44 @@ class MainArticle extends React.Component {
     }
 
     openArticle = () => {
-       /* const { article } = this.props;
-        this.props.navigation.navigate("ArticlePage", {
-            article
-        });*/
         this.props.loadArticle(this.state.article);
         this.props.navigation.navigate("ArticlePage")
-        //console.log(this.props) 
     }
 
     render() {
         return (
-            <View>
-                
-                {Platform.OS == 'android' ?
-                    <TouchableNativeFeedback useForeground
-                        //background={TouchableNativeFeedback.Ripple('#fff', false)}
-                        onPress={this.openArticle}
-                    >
-                        <InnerArticle {...this.props} article={this.state.article} />
-                    </TouchableNativeFeedback>
-                    : Platform.OS == 'ios' ?
+            Platform.select({
+                ios: (
                     <TouchableOpacity activeOpacity={0.6}
-                    onPress={this.openArticle} >
+                        onPress={this.openArticle} >
                         <InnerArticle {...this.props} article={this.state.article} />
                     </TouchableOpacity>
-                    : null
-                }
-            </View>
+                ),
+                android: (
+                    <Animated.View>
+                        <GHTouchableNativeFeedback useForeground delayPressIn={0}
+                            background={GHTouchableNativeFeedback.Ripple('#fff', false)}
+                            onPress={this.openArticle}
+                        >
+                            <InnerArticle {...this.props} article={this.state.article} />
+                        </GHTouchableNativeFeedback>
+                    </Animated.View>
+                )
+            })
         )
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-       loadArticle: article => dispatch(loadArticle(article))
+        loadArticle: article => dispatch(loadArticle(article))
     }
 }
 function mapStateToProps(state) {
     return {
-       article: {
-           imageUri: state.article.imageUri
-       }
+        article: {
+            imageUri: state.article.imageUri
+        }
     }
 }
 

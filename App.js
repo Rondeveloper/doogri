@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import {
-  Dimensions, Image, I18nManager, View, 
+  Dimensions, Image, I18nManager, View,
   Text, ScrollView, Button, TouchableOpacity, Animated, Easing
 } from 'react-native';
 import {
@@ -14,7 +14,7 @@ import { scale } from 'react-native-size-matters';
 import { TouchableNativeFeedback, TouchableHighlight } from 'react-native-gesture-handler';
 import StackViewStyleInterpolator from 'react-navigation-stack/lib/module/views/StackView/StackViewStyleInterpolator.js';
 import HeaderMenu from './src/components/HeaderMenu';
-import {MainPage, ArticlePage, NewsPage} from './src/screens';
+import { MainPage, ArticlePage, NewsPage } from './src/screens';
 
 let { height, width } = Dimensions.get('window');
 EStyleSheet.build({ $rem: width / 380 });
@@ -52,7 +52,7 @@ const MainStackNavigator = createStackNavigator({
         )
       };
     }
-  },
+  },  
   ArticlePage: {
     screen: ArticlePage,
 
@@ -76,25 +76,41 @@ const MainStackNavigator = createStackNavigator({
     })
   })
 
-  const TopTabNavigator = createMaterialTopTabNavigator({
-    News: { screen: NewsPage, navigationOptions: ({props}) => { return { tabBarLabel: 'חדשות' } } },
-    RoadTests: { screen: NewsPage, navigationOptions: ({props}) => { return { tabBarLabel: 'מבחני דרכים' } } },
-    Magazine: { screen: NewsPage, navigationOptions: ({props}) => { return { tabBarLabel: 'מגזין' } } },
-    Motorsport: { screen: NewsPage, navigationOptions: ({props}) => { return { tabBarLabel: 'ספורט מוטורי' } } },
-    Vehicle: { screen: NewsPage, navigationOptions: ({props}) => { return { tabBarLabel: 'רכב' } } },
-  },{
+const TopTabNavigator = createMaterialTopTabNavigator({
+  News: { screen: NewsPage, navigationOptions: ({ props }) => { return { tabBarLabel: 'חדשות' } } },
+  RoadTests: { screen: NewsPage, navigationOptions: ({ props }) => { return { tabBarLabel: 'מבחני דרכים' } } },
+  Magazine: { screen: NewsPage, navigationOptions: ({ props }) => { return { tabBarLabel: 'מגזין' } } },
+  Motorsport: { screen: NewsPage, navigationOptions: ({ props }) => { return { tabBarLabel: 'ספורט מוטורי' } } },
+  Vehicle: { screen: NewsPage, navigationOptions: ({ props }) => { return { tabBarLabel: 'רכב' } } },
+}, {
+    //tabBarComponent: (props) => <TopTabCustomComponent {...props} />,
     tabBarOptions: {
       style: {backgroundColor: '#2c2c2c', width: SCREEN_WIDTH*2},
       indicatorStyle: {width: SCREEN_WIDTH * 2 / 5}
     }
   })
 
+const TopTabCustomComponent = props => {
+  console.log(props)
+  return (
+    <View style={{ height: scale(100), width: SCREEN_WIDTH, backgroundColor: 'blue' }} >
+      <ScrollView horizontal style={{ height: '100%', width: '100%',  }}
+        contentContainerStyle={{ height: '100%', width: '200%' }} >
+          <TouchableNativeFeedback style={{ height: '100%', width: scale(100), backgroundColor: 'lightskyblue' }} >
+
+          </TouchableNativeFeedback>
+      </ScrollView>
+    </View>
+  )
+}
+
 const AppDrawerNavigator = createDrawerNavigator({
   MainPage: {
     screen: MainStackNavigator,
     navigationOptions: ({ navigation }) => {
-      return { drawerLabel: "עמוד הבית", }
-    }
+      return { drawerLabel: "עמוד הבית",  }
+    },
+    
   },
   News: {
     screen: TopTabNavigator,
