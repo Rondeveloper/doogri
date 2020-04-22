@@ -67,7 +67,6 @@ class MainPage extends React.Component {
           : type == ViewTypes.WIDE_CARD ? <WideCard />
             : type == ViewTypes.SMALL_CARD? <SmallCard /> 
               
-              
         : null}
       </View>
       )
@@ -121,7 +120,6 @@ class MainPage extends React.Component {
               stickySectionHeadersEnabled
               ListHeaderComponent={this.renderListHeader}
               />
-        
         
       </View>
     );

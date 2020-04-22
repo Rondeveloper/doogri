@@ -26,21 +26,24 @@ class ArticlePage extends React.Component {
         console.log('rendered ArticlePage')
         //const article = this.props.navigation.getParam('article');
         const { article } = this.props;
+         {/* <View style={{height: scale(210), width: '100%',
+                        }}>
+                            <Image style={{ width: '100%', height: '100%' }}
+                                source={{ uri: article.imageUri }} />
+                    </View> */}
         return (
-                <View>
-                    <View style={{height: scale(210), width: '100%',
+                
+                  <View>
+                    <View style={{height: scale(210), width: '100%', position: 'absolute'
                         }}>
                             <Image style={{ width: '100%', height: '100%' }}
                                 source={{ uri: article.imageUri }} />
                     </View>
-                    <ScrollView style={{position: 'absolute', top: 0,
-                    height: SCREEN_HEIGHT, width:SCREEN_WIDTH}}
-                    
-                    >
+                    <ScrollView >
                         
-                    <View style={{height: scale(195), width: '100%'}} />
+                        <View style={{height: scale(195), width: '100%'}} />
 
-                        <View style={[styles.articleContainer, { flex:1,flexDirection: 'row',flexWrap: 'wrap' }]}>
+                        <View style={[styles.articleContainer, { paddingBottom: scale(20), borderTopStartRadius: scale(20), borderTopEndRadius: scale(20) }]}>
 
                             <View style={styles.titlesContainer}>
                                 <Text style={styles.title}>{article.title}</Text>
@@ -68,14 +71,13 @@ class ArticlePage extends React.Component {
                                 </View>
                             </View>
 
-                            <View style={{width: '100%', paddingHorizontal: scale(25),
-                            alignItems: 'center', justifyContent: 'center'}} >
-                                <Text style={[styles.name, {lineHeight: 15}]}>{article.longSubtitle}</Text>
+                            <View style={{ paddingHorizontal: scale(25), alignItems: 'center'  }} >
+                                <Text style={[styles.name]}>{article.longSubtitle}</Text>
                             </View>
                             
                         </View>
                     </ScrollView>
-                </View>
+                    </View>
                 
         );
     }
@@ -98,10 +100,9 @@ const styles = EStyleSheet.create({
          width: '100%',
     },
     articleContainer: {
-        width: SCREEN_WIDTH,
         
         backgroundColor: '#2b2b2b',
-        borderRadius: 20,
+        
         //bottom: scale(14),
     },
     titlesContainer: {

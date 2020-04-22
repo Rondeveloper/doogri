@@ -37,7 +37,7 @@ export default class HeaderMenu extends React.Component {
 const styles = EStyleSheet.create({
     btn: {
         backgroundColor: '#fff',
-        marginRight: scale(5),
+        marginHorizontal: scale(5), // used to be marginRight, now margin from both sides in case I want to switch between to be headerRight / headerLeft
         width: scale(55),
         height: scale(50),
         borderRadius: 30,

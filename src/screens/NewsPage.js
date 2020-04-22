@@ -1,23 +1,18 @@
 import React from 'react';
 import {
-  View, ScrollView, Image, Dimensions, StyleSheet,
-  StatusBar, Text, SectionList, FlatList
+  View, Text
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
-import { withNavigation } from 'react-navigation';
+import { useNavigation } from '@react-navigation/native';
 
-class NewsPage extends React.PureComponent {
-    constructor(props) {
-        super(props);
-        this.state = {  }
-    }
-    render() { 
-        return ( 
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}} >
-                <Text>News</Text>
-            </View>
-         );
-    }
+function NewsPage({ route }) {
+    const navigation = useNavigation();
+    return ( 
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}} >
+            <Text style={{ fontSize: scale(25), fontWeight: 'bold' }}>{route.params.title}</Text>
+        </View>
+    );
+
 }
  
-export default withNavigation(NewsPage);
+export default NewsPage;

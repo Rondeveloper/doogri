@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import {
     View, Text, Image, TouchableOpacity, Dimensions,
     Platform, Animated, TouchableNativeFeedback
@@ -7,7 +7,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { scale } from 'react-native-size-matters';
 import { connect } from 'react-redux';
 import Constants from '../constants';
-import { withNavigation } from 'react-navigation'
+import { useNavigation } from '@react-navigation/native'
 import { TouchableNativeFeedback as GHTouchableNativeFeedback } from 'react-native-gesture-handler';
 
 import InnerArticle from './InnerArticle';
@@ -15,47 +15,42 @@ import { loadArticle } from '../actions';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-class MainArticle extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            article: {
-                imageUri: Constants.trk502x,
-                title: Constants.title,
-                subtitle: Constants.subtitle,
-                longSubtitle: Constants.longSubtitle
-            }
-        }
 
+function MainArticle( props ) {
+
+    const [article, setArticle] = useState({
+        imageUri: Constants.trk502x,
+        title: Constants.title,
+        subtitle: Constants.subtitle,
+        longSubtitle: Constants.longSubtitle})
+
+    const navigation = useNavigation()
+
+    const openArticle = () => {
+        props.loadArticle(article)
+        navigation.navigate("ArticlePage")
+        console.log(props.article)
     }
 
-    openArticle = () => {
-        this.props.loadArticle(this.state.article);
-        this.props.navigation.navigate("ArticlePage")
-    }
+    return (
+        Platform.select({
+            ios: (
+                <TouchableOpacity activeOpacity={0.6}
+                    onPress={openArticle} >
+                    <InnerArticle article={article} />
+                </TouchableOpacity>
+            ),
+            android: (
+                <GHTouchableNativeFeedback useForeground delayPressIn={0}
+                    background={GHTouchableNativeFeedback.Ripple('#fff', false)}
+                    onPress={openArticle}
+                >
+                    <InnerArticle article={article} />
+                </GHTouchableNativeFeedback>
+            )
+        })
+    )
 
-    render() {
-        return (
-            Platform.select({
-                ios: (
-                    <TouchableOpacity activeOpacity={0.6}
-                        onPress={this.openArticle} >
-                        <InnerArticle {...this.props} article={this.state.article} />
-                    </TouchableOpacity>
-                ),
-                android: (
-                    <Animated.View>
-                        <GHTouchableNativeFeedback useForeground delayPressIn={0}
-                            background={GHTouchableNativeFeedback.Ripple('#fff', false)}
-                            onPress={this.openArticle}
-                        >
-                            <InnerArticle {...this.props} article={this.state.article} />
-                        </GHTouchableNativeFeedback>
-                    </Animated.View>
-                )
-            })
-        )
-    }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -63,6 +58,7 @@ function mapDispatchToProps(dispatch) {
         loadArticle: article => dispatch(loadArticle(article))
     }
 }
+
 function mapStateToProps(state) {
     return {
         article: {
@@ -71,9 +67,9 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(MainArticle))
+export default connect(mapStateToProps, mapDispatchToProps)(MainArticle)
 
-const styles = EStyleSheet.create({
+/*const styles = EStyleSheet.create({
     imageContainer: {
         height: scale(210),
         width: '100%'
@@ -98,4 +94,4 @@ const styles = EStyleSheet.create({
         color: '#000',
         fontSize: scale(12),
     },
-})
+})*/

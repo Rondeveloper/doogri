@@ -5,7 +5,6 @@ import {
 } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { scale } from 'react-native-size-matters';
-import { createMaterialTopTabNavigator, createAppContainer } from 'react-navigation';
 import NewsPage from './NewsPage';
 
 class SwiperPage extends React.Component {
@@ -15,13 +14,13 @@ class SwiperPage extends React.Component {
     }
     render() { 
         return ( 
-            <SwiperNavigationContainer />
+            <View><Text>testings</Text></View>
          );
     }
 }
-const SwiperNavigationContainer = createAppContainer(TopTabNavigator);
+/*const SwiperNavigationContainer = createAppContainer(TopTabNavigator);
 const TopTabNavigator = createMaterialTopTabNavigator({
     News: NewsPage
-})
+})*/
  
 export default SwiperPage;

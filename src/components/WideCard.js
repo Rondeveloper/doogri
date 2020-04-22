@@ -1,51 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { scale } from 'react-native-size-matters';
 import Constants from '../constants';
-import { withNavigation } from 'react-navigation';
+import { useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { loadArticle } from '../actions';
 
-class WideCard extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            article: {
-                imageUri: Constants.golfgti,
-                title: Constants.carTitle1,
-                subtitle: Constants.carSubtitle1,
-                longSubtitle: Constants.longCarSubtitle1
-            }
-        }
+function WideCard(props) {
+
+    const navigation = useNavigation();
+
+    const [article, setArticle] = useState({
+        imageUri: Constants.golfgti,
+        title: Constants.carTitle1,
+        subtitle: Constants.carSubtitle1,
+        longSubtitle: Constants.longCarSubtitle1})
+
+    const openArticle = () => {
+        props.loadArticle(article);
+        navigation.navigate("ArticlePage");
     }
 
-    openArticle = () => {
-        this.props.loadArticle(this.state.article);
-        this.props.navigation.navigate("ArticlePage");
-    }
-
-    render() {
-        const { article } = this.state;
-        return (
-            <TouchableOpacity activeOpacity={0.7} onPress={this.openArticle} style={{marginBottom: scale(8)}}>
-                <View style={styles.container}>
-                    <Image style={styles.image}
-                    source={ { uri: article.imageUri } }
-                    />
-                    <View style={styles.textContainer}>
-                        <Text style={[styles.text, {fontWeight: 'bold'}]}>
-                            {article.title}
-                        </Text>
-                        <Text numberOfLines={2} style={[styles.text, { fontSize: scale(11), lineHeight: scale(17) }]}>
-                            {article.subtitle}
-                        </Text>
-                    </View>
+    return (
+        <TouchableOpacity activeOpacity={0.7} onPress={openArticle} style={{marginBottom: scale(8)}}>
+            <View style={styles.container}>
+                <Image style={styles.image} source={ { uri: article.imageUri } } />
+                <View style={styles.textContainer}>
+                    <Text style={[styles.text, {fontWeight: 'bold'}]}>
+                        {article.title}
+                    </Text>
+                    <Text numberOfLines={2} style={[styles.text, { fontSize: scale(11), lineHeight: scale(17) }]}>
+                        {article.subtitle}
+                    </Text>
                 </View>
-            </TouchableOpacity>
-        );
-    }
+            </View>
+        </TouchableOpacity>
+    );
 }
+
 
 function mapDispatchToProps(dispatch) {
     return {
@@ -53,7 +46,7 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(null, mapDispatchToProps) (withNavigation(WideCard));
+export default connect(null, mapDispatchToProps) (WideCard);
 
 const styles = EStyleSheet.create({
     container: {
